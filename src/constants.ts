@@ -1,2 +1,0 @@
-export const REST_API_TOKEN =
-	"a93fa746f2c8f104387b9696baeaf53de30ae2799537af26919e095184de4c6b";
