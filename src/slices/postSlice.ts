@@ -3,7 +3,7 @@ import { fetchPost as fetchPostApi } from "../api/postApi";
 import { AppThunk } from "../app/store";
 
 export interface Post {
-	image: Blob;
+	image: string;
 	title: string;
 	excerpt: string;
 	category: string;
@@ -17,7 +17,6 @@ export const fetchPost = (): AppThunk<Promise<Post[]>> => (dispatch, _) => {
 			dispatch(setPosts(posts));
 		})
 		.catch((error: Error) => {
-			alert("Error fetching posts !");
 			console.log(error.message);
 		});
 };

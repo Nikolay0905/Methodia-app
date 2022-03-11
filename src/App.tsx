@@ -1,35 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-
-/*
-<div className="card">
-					<div className="img-container">
-						<img src={logo} />
-					</div>
-					<div className="content">
-						<h3>striconsectetur adipiscing elitng</h3>
-						<p className="excerpt">
-							{" "}
-							"Class aptent taciti sociosqu ad litora torquent per conubia
-							nostra, per inceptos himenaeos. Suspendisse congue turpis ac
-							porttitor luctus. Quisque sit amet eros ac libero ornare iaculis
-							non ac ex. Nunc rutrum rutrum massa quis auctor.",
-						</p>
-						<div className="category">
-							<p>Aliquam vehicula libero vel nulla</p>
-						</div>
-					</div>
-				</div>
-
-
-*/
+import { useAppDispatch } from "./app/hooks";
+import { fetchPost, Post } from "./slices/postSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "./app/store";
 
 const App = () => {
-	const posts = [];
+	const dispatch = useAppDispatch();
+	const posts: Post[] = useSelector((state: RootState) => state.posts);
+
+	let Posts = null;
+
+	if (posts.length > 0) {
+		Posts = posts.map((post) => (
+			<div className="card" key={post.title}>
+				<div className="img-container">
+					<img src={post.image} />
+				</div>
+				<div className="content">
+					<h3>{post.title}</h3>
+					<p className="excerpt">{post.excerpt}</p>
+					<div className="category">
+						<p>{post.category}</p>
+					</div>
+				</div>
+			</div>
+		));
+	}
+
+	useEffect(() => {
+		dispatch(fetchPost());
+	}, []);
 
 	return (
 		<div className="App">
-			<div className="card-container"></div>
+			<div className="card-container">{Posts}</div>
 		</div>
 	);
 };
